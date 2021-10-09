@@ -42,13 +42,13 @@ public class UserService {
 
       return userSessionDTO;
     } catch (AuthenticationException e) {
-      throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new CustomException("Invalid username/password supplied", HttpStatus.FAILED_DEPENDENCY);
     }
   }
 
   public UserSessionDTO signup(User user) {
     if (userRepository.existsByUsername(user.getUsername())) {
-      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new CustomException("Username is already in use", HttpStatus.LOCKED);
     }
     if (userRepository.existsByEmail(user.getEmail())) {
       throw new CustomException("Email is already in use", HttpStatus.EXPECTATION_FAILED);
